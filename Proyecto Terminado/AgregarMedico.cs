@@ -26,22 +26,22 @@ namespace WindowsFormsApplication1
             string insertar = "Insert into scott.medico (identificacion,tipo_id,codigo_medico,nombre_medico,horario_medico,id_medico_supervisor,tipo_id_supervisor,tipo_categoria,salario)";
             insertar += "values(:id, :tipo_id, :cod_med, :nom, :hor, :supervisor, :tip_super, :tip_cat, :sal)";      
             //validamos que nos inyecten SQL                  
-            Conexion.get_cmd().CommandText = insertar;
-            Conexion.get_cmd().CommandType = CommandType.Text;
-            Conexion.get_cmd().Parameters.Add("id", txt_id.Text);
-            Conexion.get_cmd().Parameters.Add("tipo_id", comboBox1.SelectedItem);
-            Conexion.get_cmd().Parameters.Add("cod_med", txt_codicoM.Tex);
-            Conexion.get_cmd().Parameters.Add("nom", txt_nombre.Text);
-            Conexion.get_cmd().Parameters.Add("hor", cmb_horario.SelectedItem);
-            Conexion.get_cmd().Parameters.Add("supervisor", txt_codsup.Text);
-            Conexion.get_cmd().Parameters.Add("tip_super", Bx_tipo_id_sup.SelectedItem);
-            Conexion.get_cmd().Parameters.Add("tip_cat", txt_tipo.Text);
-            Conexion.get_cmd().Parameters.Add("sal", txt_salario.Text);
+            c.get_cmd().CommandText = insertar;
+            c.get_cmd().CommandType = CommandType.Text;
+            c.get_cmd().Parameters.Add("id", txt_id.Text);
+            c.get_cmd().Parameters.Add("tipo_id", comboBox1.SelectedItem);
+            c.get_cmd().Parameters.Add("cod_med", txt_codicoM.Text);
+            c.get_cmd().Parameters.Add("nom", txt_nombre.Text);
+            c.get_cmd().Parameters.Add("hor", cmb_horario.SelectedItem);
+            c.get_cmd().Parameters.Add("supervisor", txt_codsup.Text);
+            c.get_cmd().Parameters.Add("tip_super", Bx_tipo_id_sup.SelectedItem);
+            c.get_cmd().Parameters.Add("tip_cat", txt_tipo.Text);
+            c.get_cmd().Parameters.Add("sal", txt_salario.Text);
             
 
             try //hacemos la inserción de la sentencia
             {
-                Conexion.get_cmd().ExecuteNonQuery();
+                c.get_cmd().ExecuteNonQuery();
                 MessageBox.Show("Médico registrado correctamente" );
                 c.Close();
             }catch { MessageBox.Show("No fue posible hacer el registro, consulte al administrador del sistema");}

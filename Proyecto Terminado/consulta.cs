@@ -35,8 +35,8 @@ namespace WindowsFormsApplication1
         private void txt_nasegurado_TextChanged(object sender, EventArgs e){ }
 
         private void button1_Click(object sender, EventArgs e) {
-            Examenes E = new Examenes();
-            E.Show();
+            
+           
         }
 
         private void button2_Click(object sender, EventArgs e) {
@@ -60,17 +60,17 @@ namespace WindowsFormsApplication1
                 Conexion c = new Conexion();
                 String query = "select codigo_medico,tipo_id,nombre_paciente,fdenac_paciente,tipo_identificacion from scott.Medico,scott.Paciente";
                 query += "where num_identificacion_paciente= :id  And identificacion= :medico ";
-                Conexion.get_cmd().CommandText = query;
-                Conexion.get_cmd().CommandType = CommandType.Text;
+                c.get_cmd().CommandText = query;
+                c.get_cmd().CommandType = CommandType.Text;
                 //evitamos inyección SQL
-                Conexion.get_cmd().Parameters.Add("id", id_paciente);
-                Conexion.get_cmd().Parameters.Add("medico", id_medico);
+                c.get_cmd().Parameters.Add("id", id_paciente);
+                c.get_cmd().Parameters.Add("medico", id_medico);
      
                  //****Ejecutamos la consulta mediante un DataReader de Oracle
-                OracleDataReader reader = Conexion.get_cmd().ExecuteReader();
+                OracleDataReader reader = c.get_cmd().ExecuteReader();
                  //***si se quiere en un dataset
                     //Al adaptador hay que pasarle el string SQL y la Conexión
-                OracleDataAdapter adapter = new OracleDataAdapter(Conexion.get_cmd());               
+                OracleDataAdapter adapter = new OracleDataAdapter(c.get_cmd());               
                  
                  if (reader.Read()){
                      lbl_codigo_medico.Text = reader[0].ToString();
@@ -102,36 +102,36 @@ namespace WindowsFormsApplication1
             Conexion c = new Conexion();
             try{                
                 string insertar = "Insert into scott.Consulta(fecha_consulta,hora_consulta) values(:fec, :hor )";                     
-                Conexion.get_cmd().CommandText = insertar;
-                Conexion.get_cmd().CommandType = CommandType.Text;
+                c.get_cmd().CommandText = insertar;
+                c.get_cmd().CommandType = CommandType.Text;
                 //evitamos inyección SQL
-                Conexion.get_cmd().Parameters.Add("fec", fecha);
-                Conexion.get_cmd().Parameters.Add("hor", hora);
-                Conexion.get_cmd().ExecuteNonQuery();
+                c.get_cmd().Parameters.Add("fec", fecha);
+                c.get_cmd().Parameters.Add("hor", hora);
+                c.get_cmd().ExecuteNonQuery();
                // MessageBox.Show("insertado correctamente");
 
                 insertar = "Insert into scott.diagnostico (descripcion_diagnostico,fecha) values(:des, :fec)";               
-                Conexion.get_cmd().CommandText = insertar;
-                Conexion.get_cmd().CommandType = CommandType.Text;
+                c.get_cmd().CommandText = insertar;
+                c.get_cmd().CommandType = CommandType.Text;
                 //evitamos inyección SQL
-                Conexion.get_cmd().Parameters.Add("des", txt_descripcion.Text);
-                Conexion.get_cmd().Parameters.Add("fec", fecha);
+                c.get_cmd().Parameters.Add("des", txt_descripcion.Text);
+                c.get_cmd().Parameters.Add("fec", fecha);
                 
                 try{
-                    Conexion.get_cmd().ExecuteNonQuery();
+                    c.get_cmd().ExecuteNonQuery();
                   //  MessageBox.Show("insertado correctamente en la tabla diagnostico");
                 } catch { MessageBox.Show("Error al ingresar el diagnostico, consulte al administrador del sistema");}
 
                 
                 try {               
                     String query = "select MAX(codigo_consulta), MAX(codigo_diagnostico) from scott.consulta,scott.diagnostico ";
-                    Conexion.get_cmd().CommandText = query;
-                    Conexion.get_cmd().CommandType = CommandType.Text;
+                    c.get_cmd().CommandText = query;
+                    c.get_cmd().CommandType = CommandType.Text;
                     //****Ejecutamos la consulta mediante un DataReader de Oracle
-                    OracleDataReader reader = Conexion.get_cmd().ExecuteReader();
+                    OracleDataReader reader = c.get_cmd().ExecuteReader();
                     //***si se quiere en un dataset
                     //Al adaptador hay que pasarle el string SQL y la Conexión
-                    OracleDataAdapter adapter = new OracleDataAdapter(Conexion.get_cmd());
+                    OracleDataAdapter adapter = new OracleDataAdapter(c.get_cmd());
                     if (reader.Read()){
                         //     lbl_codigo_medico.Text = reader[0].ToString();
                         string cod_consulta = reader[0].ToString();
@@ -139,13 +139,13 @@ namespace WindowsFormsApplication1
                         // MessageBox.Show("codigos consulta y diagnostico :"+ cod_consulta +","+cod_diagnostico);
 
                         insertar = "Insert into scott.genera (codigo_diagnostico,codigo_consulta) values( :diag, :consul )";                         
-                        Conexion.get_cmd().CommandText = insertar;
-                        Conexion.get_cmd().CommandType = CommandType.Text;
+                        c.get_cmd().CommandText = insertar;
+                        c.get_cmd().CommandType = CommandType.Text;
                         //evitamos inyección SQL
-                        Conexion.get_cmd().Parameters.Add("diag", cod_diagnostico);
-                        Conexion.get_cmd().Parameters.Add("consul", cod_consulta);
+                        c.get_cmd().Parameters.Add("diag", cod_diagnostico);
+                        c.get_cmd().Parameters.Add("consul", cod_consulta);
 
-                        try { Conexion.get_cmd().ExecuteNonQuery(); }
+                        try { c.get_cmd().ExecuteNonQuery(); }
 
 
                         catch { MessageBox.Show("Error al registrar el diagnóstico, consulte al administrador del sistema"); }
@@ -153,17 +153,17 @@ namespace WindowsFormsApplication1
                         insertar = "Insert into scott.participa (num_identificacion_paciente,tipo_identificacion,codigo_consulta,identificacion,tipo_id)";
                         insertar += "values(:id, :tip, :consulta, :id_me, :id_tipo)";
                         
-                        Conexion.get_cmd().CommandText = insertar;
-                        Conexion.get_cmd().CommandType = CommandType.Text;
+                        c.get_cmd().CommandText = insertar;
+                        c.get_cmd().CommandType = CommandType.Text;
                         //evitamos inyección SQL
-                        Conexion.get_cmd().Parameters.Add("id", cedula);
-                        Conexion.get_cmd().Parameters.Add("tip", tipo);
-                        Conexion.get_cmd().Parameters.Add("consulta", cod_consulta);
-                        Conexion.get_cmd().Parameters.Add("id_me", Login.get_user());
-                        Conexion.get_cmd().Parameters.Add("id_tipo", tipo_ids);
+                        c.get_cmd().Parameters.Add("id", cedula);
+                        c.get_cmd().Parameters.Add("tip", tipo);
+                        c.get_cmd().Parameters.Add("consulta", cod_consulta);
+                        c.get_cmd().Parameters.Add("id_me", Login.get_user());
+                        c.get_cmd().Parameters.Add("id_tipo", tipo_ids);
                          try
                          {
-                             Conexion.get_cmd().ExecuteNonQuery();
+                             c.get_cmd().ExecuteNonQuery();
                              c.Close();
                          }
 

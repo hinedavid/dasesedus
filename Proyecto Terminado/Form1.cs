@@ -106,5 +106,11 @@ namespace WindowsFormsApplication1
             aumento a = new aumento();
             a.Show();
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            paciente p = new paciente();
+            p.Show();
+        }
     }
 }

@@ -23,16 +23,16 @@ namespace WindowsFormsApplication1
                 String query = "select codigo_tratamiento,descripcion_tratamiento,codigo_medico,nombre_medico from";
                 query += "((scott.toma NATURAL JOIN scott.TRATAMIENTO)NATURAL JOIN scott.prescribe)NATURAL JOIN scott.Medico ";
                 query += " Where num_identificacion_paciente= :id";
-                Conexion.get_cmd().CommandText = query;
-                Conexion.get_cmd().CommandType = CommandType.Text;
+                c.get_cmd().CommandText = query;
+                c.get_cmd().CommandType = CommandType.Text;
                 //evitamos inyección SQL
-                Conexion.get_cmd().Parameters.Add("id", txt_identificacion.Text);
+                c.get_cmd().Parameters.Add("id", txt_identificacion.Text);
 
                 //****Ejecutamos la consulta mediante un DataReader de Oracle
-                OracleDataReader reader = Conexion.get_cmd().ExecuteReader();
+                OracleDataReader reader = c.get_cmd().ExecuteReader();
                 //***si se quiere en un dataset
                 //Al adaptador hay que pasarle el string SQL y la Conexión
-                OracleDataAdapter adapter = new OracleDataAdapter(Conexion.get_cmd());
+                OracleDataAdapter adapter = new OracleDataAdapter(c.get_cmd());
 
 
                 if (reader.Read()){

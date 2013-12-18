@@ -43,51 +43,51 @@ namespace WindowsFormsApplication1
             //abrir conexión
             Conexion c = new Conexion();
             string insertar = "Insert into scott.tratamiento (descripcion_tratamiento) values( :descrip)";
-            Conexion.get_cmd().CommandText = insertar;
-            Conexion.get_cmd().CommandType = CommandType.Text;
+            c.get_cmd().CommandText = insertar;
+            c.get_cmd().CommandType = CommandType.Text;
             //evitamos inyección SQL
-            Conexion.get_cmd().Parameters.Add("descrip", txt_descripcion.Text);
+            c.get_cmd().Parameters.Add("descrip", txt_descripcion.Text);
 
             try{ 
-                Conexion.get_cmd().ExecuteNonQuery();             
+                c.get_cmd().ExecuteNonQuery();             
             }catch{
                 MessageBox.Show("Error al registrar el tratamiento, consulte al administrador del sistema");}
             try {
                 String query = "select MAX(codigo_tratamiento) from scott.tratamiento ";
-                Conexion.get_cmd().CommandText = query;
-                Conexion.get_cmd().CommandType = CommandType.Text;
+                c.get_cmd().CommandText = query;
+                c.get_cmd().CommandType = CommandType.Text;
                  //****Ejecutamos la consulta mediante un DataReader de Oracle
-                OracleDataReader reader = Conexion.get_cmd().ExecuteReader();
+                OracleDataReader reader = c.get_cmd().ExecuteReader();
                 //***si se quiere en un dataset
                 //Al adaptador hay que pasarle el string SQL y la Conexión
-                OracleDataAdapter adapter = new OracleDataAdapter(Conexion.get_cmd());
+                OracleDataAdapter adapter = new OracleDataAdapter(c.get_cmd());
                  if (reader.Read()){
                      string cod_tratamiento = reader[0].ToString();
                      insertar = "Insert into scott.toma (num_identificacion_paciente,tipo_identificacion,codigo_tratamiento)";
                      insertar += "values( :id, :tip , : trata )"; 
 
-                     Conexion.get_cmd().CommandText = insertar;
-                     Conexion.get_cmd().CommandType = CommandType.Text;
+                     c.get_cmd().CommandText = insertar;
+                     c.get_cmd().CommandType = CommandType.Text;
                      //evitamos inyección SQL
-                     Conexion.get_cmd().Parameters.Add("id", cedula);
-                     Conexion.get_cmd().Parameters.Add("tip", tipo);
-                     Conexion.get_cmd().Parameters.Add("trata", cod_tratamiento);
+                     c.get_cmd().Parameters.Add("id", cedula);
+                     c.get_cmd().Parameters.Add("tip", tipo);
+                     c.get_cmd().Parameters.Add("trata", cod_tratamiento);
 
                      try{
-                         Conexion.get_cmd().ExecuteNonQuery();                        
+                         c.get_cmd().ExecuteNonQuery();                        
                      }catch{ MessageBox.Show("soy el catch de tratamiento");}
 
                      insertar = "Insert into scott.prescribe(identificacion,tipo_id,codigo_tratamiento) values( :ced, :tipo_ced, :trat)";                      
-                     Conexion.get_cmd().CommandText = insertar;
-                     Conexion.get_cmd().CommandType = CommandType.Text;
+                     c.get_cmd().CommandText = insertar;
+                     c.get_cmd().CommandType = CommandType.Text;
                      //evitamos inyección SQL
-                     Conexion.get_cmd().Parameters.Add("ced", cedulaMed);
-                     Conexion.get_cmd().Parameters.Add("tipo_ced", tipomed);
-                     Conexion.get_cmd().Parameters.Add("trat", cod_tratamiento);
+                     c.get_cmd().Parameters.Add("ced", cedulaMed);
+                     c.get_cmd().Parameters.Add("tipo_ced", tipomed);
+                     c.get_cmd().Parameters.Add("trat", cod_tratamiento);
 
                      try
                      {
-                         Conexion.get_cmd().ExecuteNonQuery();
+                         c.get_cmd().ExecuteNonQuery();
                         // MessageBox.Show("insertado correctamente en la tabla tratamiento");
                          c.Close();
                      }

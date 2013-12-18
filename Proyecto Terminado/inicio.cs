@@ -41,7 +41,7 @@ namespace WindowsFormsApplication1
              //verifica que la conexiòn se haya establecido
             if (Conexion.Success()) {
                 //verifica que los datos del login sean correctos
-                Login L = new Login(user, pass);
+                Login L = new Login(user, pass,c);
                 if (Login.Success())
                 {
                     Principal F1 = new Principal();

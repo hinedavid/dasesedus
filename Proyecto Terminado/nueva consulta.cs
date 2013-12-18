@@ -30,17 +30,17 @@ namespace WindowsFormsApplication1
             //abrir la conexión 
             Conexion c = new Conexion();
             String query = "select * from scott.PACIENTE Where num_identificacion_paciente = :id "; 
-            Conexion.get_cmd().CommandText = query;
-            Conexion.get_cmd().CommandType = CommandType.Text;
+            c.get_cmd().CommandText = query;
+            c.get_cmd().CommandType = CommandType.Text;
             //evitamos inyección SQL
-            Conexion.get_cmd().Parameters.Add("id", txt_idpaciente.Text);
+            c.get_cmd().Parameters.Add("id", txt_idpaciente.Text);
 
             
             //****Ejecutamos la consulta mediante un DataReader de Oracle
-            OracleDataReader reader = Conexion.get_cmd().ExecuteReader();
+            OracleDataReader reader = c.get_cmd().ExecuteReader();
             //***si se quiere en un dataset
             //Al adaptador hay que pasarle el string SQL y la Conexión
-            OracleDataAdapter adapter = new OracleDataAdapter(Conexion.get_cmd());          
+            OracleDataAdapter adapter = new OracleDataAdapter(c.get_cmd());          
             if ( reader.Read () ){
                 MessageBox.Show("Exsite paciente");
                 consulta f3 = new consulta(txt_idpaciente.Text);

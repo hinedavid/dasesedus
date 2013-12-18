@@ -11,7 +11,7 @@ using System.Windows.Forms;
     {
         
         private static bool success;
-        private static OracleCommand cmd = new OracleCommand();
+        private  OracleCommand cmd = new OracleCommand();
         OracleConnection conn;
 
         //constructor de la clase conexión
@@ -34,7 +34,7 @@ using System.Windows.Forms;
          //retorna la la condiciòn de apertura de la base
          public static bool Success() { return success; }
 
-         public  static OracleCommand get_cmd() { return cmd; }
+         public   OracleCommand get_cmd() { return cmd; }
 
          public void Close() { conn.Close(); }        
     }

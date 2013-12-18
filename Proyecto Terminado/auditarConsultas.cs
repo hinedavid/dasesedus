@@ -32,14 +32,14 @@ namespace WindowsFormsApplication1
                 
                 String query = "select num_identificacion_paciente,nombre_paciente,nombre_medico,codigo_medico from ((scott.Participa NATURAL JOIN scott.CONSULTA) NATURAL JOIN scott.Paciente )NATURAL JOIN scott.Medico Where identificacion= :id And fecha_consulta= :consulta";
                 //evitamos la inyección de código sql
-                Conexion.get_cmd().CommandText = query;
-                Conexion.get_cmd().CommandType = CommandType.Text;
-                Conexion.get_cmd().Parameters.Add("id", txt_codigo_medico.Text);
-                Conexion.get_cmd().Parameters.Add("consulta", date_consulta.Text);
+                c.get_cmd().CommandText = query;
+                c.get_cmd().CommandType = CommandType.Text;
+                c.get_cmd().Parameters.Add("id", txt_codigo_medico.Text);
+                c.get_cmd().Parameters.Add("consulta", date_consulta.Text);
      
                  //****Ejecutamos la consulta mediante un DataReader de Oracle
-                OracleDataReader reader = Conexion.get_cmd().ExecuteReader();
-                OracleDataAdapter adapter = new OracleDataAdapter(Conexion.get_cmd());
+                OracleDataReader reader = c.get_cmd().ExecuteReader();
+                OracleDataAdapter adapter = new OracleDataAdapter(c.get_cmd());
                 
                  if (reader.Read()) {
                      //Si la consulta fue exitosa, se cargan los datos en el datagrid                

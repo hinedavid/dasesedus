@@ -16,26 +16,25 @@ using System.Windows.Forms;
         private static string tipo;
         //private static OracleCommand cmd;
 
-        public Login(string login_user,string login_pass)
+        public Login(string login_user,string login_pass, Conexion c)
         {
             user = login_user;
             pass = login_pass;           
-            OracleCommand cmd = new OracleCommand();            
-            cmd = Conexion.get_cmd();
+            
 
             try {     
 
                 String query = "select usuario,passwd,tipo from scott.USUARIO Where usuario=  :user1 And passwd= :pass1 ";
-                cmd.CommandText = query;
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.Add("user1", user);
-                cmd.Parameters.Add("pass1", pass);
+                c.get_cmd().CommandText = query;
+                c.get_cmd().CommandType = CommandType.Text;
+                c.get_cmd().Parameters.Add("user1", user);
+                c.get_cmd().Parameters.Add("pass1", pass);
                
                 //****Ejecutamos la consulta mediante un DataReader de Oracle
-                OracleDataReader reader = cmd.ExecuteReader();
+                OracleDataReader reader = c.get_cmd().ExecuteReader();
                
                 //Al adaptador hay que pasarle el string SQL y la Conexión
-                OracleDataAdapter adapter = new OracleDataAdapter(cmd);
+                OracleDataAdapter adapter = new OracleDataAdapter(c.get_cmd());
                 DataSet set = new DataSet();
                 
                 set.Tables.Add("Tabla");

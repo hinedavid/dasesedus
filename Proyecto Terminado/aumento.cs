@@ -27,14 +27,14 @@ namespace WindowsFormsApplication1
         {
             //abrir la conexión
             Conexion c = new Conexion();
-            string insertar = "begin scott.salarioAumentar :aumento; END;";
+            string insertar = "begin scott.salarioAumentar (:aumento); END;";
             //evitar inyección código SQL
-            Conexion.get_cmd().CommandText = insertar;
-            Conexion.get_cmd().CommandType = CommandType.Text;
-            Conexion.get_cmd().Parameters.Add("aumento", txt_aumento.Text);
+            c.get_cmd().CommandText = insertar;
+            c.get_cmd().CommandType = CommandType.Text;
+            c.get_cmd().Parameters.Add("aumento", txt_aumento.Text);
 
             try{
-                Conexion.get_cmd().ExecuteNonQuery();
+                c.get_cmd().ExecuteNonQuery();
                 c.Close();
                 this.Salarios();               
             } catch {
@@ -56,14 +56,14 @@ namespace WindowsFormsApplication1
                 try
                 {
                  String query = "select identificacion,nombre_medico,codigo_medico,salario from scott.Medico";
-                Conexion.get_cmd().CommandText = query;
-                Conexion.get_cmd().CommandType = CommandType.Text;
+                c.get_cmd().CommandText = query;
+                c.get_cmd().CommandType = CommandType.Text;
 
                 //****Ejecutamos la consulta mediante un DataReader de Oracle
-                OracleDataReader reader = Conexion.get_cmd().ExecuteReader();
+                OracleDataReader reader = c.get_cmd().ExecuteReader();
                 //***si se quiere en un dataset
                 //Al adaptador hay que pasarle el string SQL y la Conexión
-                OracleDataAdapter adapter = new OracleDataAdapter(Conexion.get_cmd());
+                OracleDataAdapter adapter = new OracleDataAdapter(c.get_cmd());
 
 
                 if (reader.Read())
