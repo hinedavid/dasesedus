@@ -120,6 +120,12 @@
     <Compile Include="consulta.Designer.cs">
       <DependentUpon>consulta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Medico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Medico.Designer.cs">
+      <DependentUpon>Medico.cs</DependentUpon>
+    </Compile>
     <Compile Include="paciente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="consulta.resx">
       <DependentUpon>consulta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Medico.resx">
+      <DependentUpon>Medico.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\x86\Debug\WindowsFormsApplication1.AgregarMedico.resources" />
     <EmbeddedResource Include="obj\x86\Debug\WindowsFormsApplication1.auditarConsultas.resources" />

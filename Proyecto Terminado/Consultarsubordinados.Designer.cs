@@ -39,16 +39,16 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(63, 65);
+            this.label1.Location = new System.Drawing.Point(38, 68);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 20);
+            this.label1.Size = new System.Drawing.Size(158, 20);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Código Médico";
+            this.label1.Text = "Identificación Médico";
             // 
             // txt_identificacion
             // 
-            this.txt_identificacion.Location = new System.Drawing.Point(189, 60);
+            this.txt_identificacion.Location = new System.Drawing.Point(204, 62);
             this.txt_identificacion.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txt_identificacion.MaxLength = 9;
             this.txt_identificacion.Name = "txt_identificacion";

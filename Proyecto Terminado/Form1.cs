@@ -112,5 +112,11 @@ namespace WindowsFormsApplication1
             paciente p = new paciente();
             p.Show();
         }
+
+        private void btn_medico_Click(object sender, EventArgs e)
+        {
+            Medico m = new Medico();
+            m.Show();
+        }
     }
 }

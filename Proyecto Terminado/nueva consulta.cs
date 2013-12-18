@@ -25,10 +25,10 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            Conexion c = new Conexion();
             try{
             //abrir la conexión 
-            Conexion c = new Conexion();
+            
             String query = "select * from scott.PACIENTE Where num_identificacion_paciente = :id "; 
             c.get_cmd().CommandText = query;
             c.get_cmd().CommandType = CommandType.Text;
@@ -48,7 +48,9 @@ namespace WindowsFormsApplication1
                 this.Hide();
                 c.Close();
             }
-            else { MessageBox.Show("No existe paciente"); }
+            else { MessageBox.Show("No existe paciente");
+                    c.Close();
+            }
             }
             catch { }
 

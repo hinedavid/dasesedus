@@ -49,47 +49,54 @@ namespace WindowsFormsApplication1
             c.get_cmd().Parameters.Add("descrip", txt_descripcion.Text);
 
             try{ 
-                c.get_cmd().ExecuteNonQuery();             
+                c.get_cmd().ExecuteNonQuery();
+                c.Close();
             }catch{
                 MessageBox.Show("Error al registrar el tratamiento, consulte al administrador del sistema");}
+
+
+            Conexion d = new Conexion();
             try {
                 String query = "select MAX(codigo_tratamiento) from scott.tratamiento ";
-                c.get_cmd().CommandText = query;
-                c.get_cmd().CommandType = CommandType.Text;
+                d.get_cmd().CommandText = query;
+                d.get_cmd().CommandType = CommandType.Text;
                  //****Ejecutamos la consulta mediante un DataReader de Oracle
-                OracleDataReader reader = c.get_cmd().ExecuteReader();
+                OracleDataReader reader = d.get_cmd().ExecuteReader();
                 //***si se quiere en un dataset
                 //Al adaptador hay que pasarle el string SQL y la Conexión
-                OracleDataAdapter adapter = new OracleDataAdapter(c.get_cmd());
+                OracleDataAdapter adapter = new OracleDataAdapter(d.get_cmd());
                  if (reader.Read()){
                      string cod_tratamiento = reader[0].ToString();
                      insertar = "Insert into scott.toma (num_identificacion_paciente,tipo_identificacion,codigo_tratamiento)";
                      insertar += "values( :id, :tip , : trata )"; 
 
-                     c.get_cmd().CommandText = insertar;
-                     c.get_cmd().CommandType = CommandType.Text;
+                     d.get_cmd().CommandText = insertar;
+                     d.get_cmd().CommandType = CommandType.Text;
                      //evitamos inyección SQL
-                     c.get_cmd().Parameters.Add("id", cedula);
-                     c.get_cmd().Parameters.Add("tip", tipo);
-                     c.get_cmd().Parameters.Add("trata", cod_tratamiento);
+                     d.get_cmd().Parameters.Add("id", cedula);
+                     d.get_cmd().Parameters.Add("tip", tipo);
+                     d.get_cmd().Parameters.Add("trata", cod_tratamiento);
+
 
                      try{
-                         c.get_cmd().ExecuteNonQuery();                        
+                         d.get_cmd().ExecuteNonQuery();
+                         d.Close();
                      }catch{ MessageBox.Show("soy el catch de tratamiento");}
 
+                     Conexion ce = new Conexion();
                      insertar = "Insert into scott.prescribe(identificacion,tipo_id,codigo_tratamiento) values( :ced, :tipo_ced, :trat)";                      
-                     c.get_cmd().CommandText = insertar;
-                     c.get_cmd().CommandType = CommandType.Text;
+                     ce.get_cmd().CommandText = insertar;
+                     ce.get_cmd().CommandType = CommandType.Text;
                      //evitamos inyección SQL
-                     c.get_cmd().Parameters.Add("ced", cedulaMed);
-                     c.get_cmd().Parameters.Add("tipo_ced", tipomed);
-                     c.get_cmd().Parameters.Add("trat", cod_tratamiento);
+                     ce.get_cmd().Parameters.Add("ced", cedulaMed);
+                     ce.get_cmd().Parameters.Add("tipo_ced", tipomed);
+                     ce.get_cmd().Parameters.Add("trat", cod_tratamiento);
 
                      try
                      {
-                         c.get_cmd().ExecuteNonQuery();
-                        // MessageBox.Show("insertado correctamente en la tabla tratamiento");
-                         c.Close();
+                         ce.get_cmd().ExecuteNonQuery();
+                         ce.Close();
+                        
                      }
 
                      catch
@@ -97,7 +104,8 @@ namespace WindowsFormsApplication1
                          MessageBox.Show("Error de regsitro, consulte al administrador del sistema");
                          c.Close(); // cerramos la conección
                      }
-                  }           
+                  }
+                  
             }
              catch
              {

@@ -38,6 +38,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btn_aumento_salario = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.btn_medico = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_nueva_consulta
@@ -148,11 +149,23 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
+            // btn_medico
+            // 
+            this.btn_medico.Location = new System.Drawing.Point(207, 232);
+            this.btn_medico.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_medico.Name = "btn_medico";
+            this.btn_medico.Size = new System.Drawing.Size(153, 76);
+            this.btn_medico.TabIndex = 11;
+            this.btn_medico.Text = "Médico";
+            this.btn_medico.UseVisualStyleBackColor = true;
+            this.btn_medico.Click += new System.EventHandler(this.btn_medico_Click);
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(782, 408);
+            this.Controls.Add(this.btn_medico);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_aumento_salario);
             this.Controls.Add(this.label2);
@@ -188,6 +201,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_aumento_salario;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_medico;
 
     }
 }
